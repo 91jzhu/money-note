@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div id="app">
     <router-view/>
   </div>
 </template>
 
-
 <style lang="scss">
+
 * {
   margin: 0;
   padding: 0;
@@ -17,7 +17,6 @@ button, input {
 }
 
 body {
-  overflow-y: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #333;

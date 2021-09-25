@@ -96,7 +96,7 @@ export default class EditLabel extends Vue {
 }
 
 .navBar {
-  min-height: 10vh;
+  min-height: 40px;
   font-size: 24px;
   text-align: center;
   padding: 12px 16px;

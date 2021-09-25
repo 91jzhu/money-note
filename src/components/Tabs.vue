@@ -1,7 +1,7 @@
 <template>
   <div class="top">
     <Icon name="one"/>
-    <span>记一笔帐</span>
+    <span>{{content}}</span>
     <ul class="tabs" :class="{[classPreFix+'-tabs']: classPreFix}">
       <li v-for="item in dataSource" :key="item.value"
           class="tabs-item"
@@ -20,9 +20,11 @@ import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class Tabs extends Vue {
+  @Prop(String) content?:string|"";
   @Prop({required: true}) dataSource!: [{ text: string, value: string }];
   @Prop(String) readonly value!: string;
   @Prop(String) classPreFix?: string;
+
 
   select(item: { text: string, value: string }) {
     this.$emit('update:value', item.value);
@@ -37,7 +39,7 @@ export default class Tabs extends Vue {
   justify-content: space-around;
   align-items: center;
   flex-wrap: nowrap;
-  min-height: 10vh;
+  min-height: 60px;
   background: rgb(255, 255, 255);
 }
 .tabs {

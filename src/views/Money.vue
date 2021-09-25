@@ -1,11 +1,14 @@
 <template>
   <div>
-    <LayOut content-class="xxx">
+    <LayOut content-class="xxx"
+            ref="layout"
+            :style="{height:h+'px'}">
       <Keyboard :value.sync="record.amount"
                 :value2.sync="record.notes"
                 @submit="saveRecord"/>
       <Tags @update:value="record.tags=$event"/>
-      <Tabs :data-source="typeList"
+      <Tabs :content=str
+            :data-source="typeList"
             :value.sync="record.type"
             class="tab-style"/>
     </LayOut>
@@ -30,20 +33,22 @@ import typeList from '@/constants/typeList';
   }
 })
 export default class Money extends Vue {
-
+  str: string = '记一笔帐';
+  h = document.body.clientHeight;
   record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
-  typeList=typeList
-  created(){
-    this.$store.commit('fetchRecords')
+  typeList = typeList;
+
+  created() {
+    this.$store.commit('fetchRecords');
   }
 
   saveRecord() {
-    if(!this.record.tags||this.record.tags.length===0){
-      window.alert("请至少选择一个标签")
-      return
+    if (!this.record.tags || this.record.tags.length === 0) {
+      window.alert('请至少选择一个标签');
+      return;
     }
     this.$store.commit('createRecord', this.record);
-    this.record.notes=""
+    this.record.notes = '';
   }
 
 }

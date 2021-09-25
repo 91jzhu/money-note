@@ -63,10 +63,10 @@ export default class Tags extends mixins(TagHelper) {
     > li {
       box-shadow: 5px 2.5px 2.5px pink;
       background-color: lightblue;
-      height: 24px;
-      line-height: 24px;
+      height: 30px;
+      line-height: 30px;
       border-radius: 12px;
-      padding: 0 16px;
+      padding: 0 12px;
       margin-right: 12px;
       margin-top: 12px;
 

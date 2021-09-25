@@ -1,24 +1,28 @@
 <template>
   <LayOut>
     <div class="test">
-      <Tabs class-pre-fix="type" :data-source="typeList" :value.sync="type"/>
-        <ol class="ol-class" v-if="groupedList.length>0">
-          <li v-for="(group,index) in groupedList" :key="index">
-            <h3 class="title">{{ beautify(group.title) }}<span>￥ {{ group.total }}</span></h3>
-            <ol>
-              <li v-for="item in group.items" :key="item.id"
-                  class="record">
-                <span>{{ tagString(item.tags) }}</span>
-                <div class="notess">{{ item.notes }}</div>
-                <span>￥ {{ item.amount }} </span>
-              </li>
-            </ol>
-          </li>
-        </ol>
+      <Tabs :content=str
+            class-pre-fix="type"
+            :data-source="typeList"
+            :value.sync="type"/>
+      <ol class="ol-class" v-if="groupedList.length>0">
+        <li v-for="(group,index) in groupedList" :key="index">
+          <h3 class="title">{{ beautify(group.title) }}<span>￥ {{ group.total }}</span></h3>
+          <ol>
+            <li v-for="item in group.items" :key="item.id"
+                class="record">
+              <span>{{ tagString(item.tags) }}</span>
+              <div class="notess">{{ item.notes }}</div>
+              <span>￥ {{ item.amount }} </span>
+            </li>
+          </ol>
+        </li>
+      </ol>
 
-        <div v-else class="no-result">
-          还没有记录，快来记一🖊吧
-        </div>
+      <div v-else class="no-result">
+        <Icon name="replace" style="font-size: 192px"/>
+        <span class="text">还没有记录，快来记一🖊吧</span>
+      </div>
     </div>
   </LayOut>
 </template>
@@ -37,6 +41,8 @@ const oneDay = 864000;
   components: {Tabs}
 })
 export default class Statistics extends Vue {
+  str: string = '看账本啦';
+
   beautify(string: string) {
     const now = new Date();
     if (dayjs(string).isSame(now, 'day')) {
@@ -100,15 +106,24 @@ export default class Statistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.test2 {
-  min-height: 10vh;
+.text {
+  margin-top: 16px;
 }
+
 .no-result {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  top: 400px;
+  top: 30%;
   left: 50%;
   transform: translateX(-50%);
   white-space: nowrap;
+}
+
+.test2 {
+  min-height: 10vh;
 }
 
 .ol-class {

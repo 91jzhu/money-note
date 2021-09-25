@@ -130,7 +130,7 @@ export default class Keyboard extends Vue {
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
-    min-height: 34vh;
+    min-height: 220px;
     &::after {
       content: "";
       display: block;

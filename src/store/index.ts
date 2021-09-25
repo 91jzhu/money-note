@@ -26,7 +26,6 @@ const store = new Vuex.Store({
             state.recordList.push(record2);
             store.commit('saveRecords');
             window.alert('记账成功');
-            // recordStore.saveRecords();
         },
         saveRecords(state) {
             window.localStorage.setItem('recordList',
@@ -50,7 +49,7 @@ const store = new Vuex.Store({
             const id = createId().toString();
             state.tagList.push({id, name: name});
             store.commit('saveTags');
-
+            window.alert('创建成功');
         },
         saveTags(state) {
             window.localStorage.setItem('tagList', JSON.stringify(state.tagList));

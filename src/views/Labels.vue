@@ -9,6 +9,7 @@
         标签页
       </div>
       <router-link class="tag"
+                   ref="www"
                    :to="`/labels/edit/${tag.id}`"
                    v-for="tag in tags" :key="tag.id">
         <span>
@@ -41,24 +42,24 @@ export default class Labels extends mixins(TagHelper) {
     this.$store.commit('fetchTags');
   }
 }
+
 </script>
 
 <style lang="scss" scoped>
 .test{
-  min-height: 10vh;
+  height: 60px;
 }
 .top {
-  box-shadow: 0 3px 3px -3px #5E5E5E;
-  position: absolute;
-  top:0;
-  left:0;
-  min-width: 100%;
+  width: 100%;
   background: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 10vh;
+  height: 60px;
   font-size: 24px;
+  top:0;
+  position: absolute;
+  box-shadow: 0 3px 3px -3px #5E5E5E;
 }
 
 .newTag {
@@ -87,9 +88,9 @@ export default class Labels extends mixins(TagHelper) {
   }
 
   > .tag {
-    padding:0 16px;
+    padding: 0 16px;
     background: #f9faf5;
-    min-height: 50px;
+    height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
