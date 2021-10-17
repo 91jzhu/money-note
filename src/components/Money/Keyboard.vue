@@ -97,10 +97,16 @@ export default class Keyboard extends Vue {
   display: flex;
   align-items: center;
   input {
+    padding:4px 8px;
+    outline: none;
     border:none;
     height: 28px;
     flex-grow: 1;
     background-color: transparent;
+    &:focus{
+      outline:1px solid lightcoral;
+      box-shadow: 0 0 3px cyan inset;
+    }
   }
 }
 

@@ -113,6 +113,7 @@ export default class Statistics extends Vue {
 .no-result {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: absolute;

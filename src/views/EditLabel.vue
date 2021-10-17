@@ -1,5 +1,5 @@
 <template>
-  <LayOut>
+  <LayOut :style="{height:h+'px'}">
       <div class="navBar">
         <Icon class="leftIcon"
               name="left"
@@ -32,6 +32,8 @@ import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/Money/FormItem.vue';
 import Button from '@/components/Button.vue';
 
+
+
 @Component({
   components: {Button, FormItem, Notes: FormItem},
   computed: {
@@ -42,7 +44,7 @@ import Button from '@/components/Button.vue';
 })
 export default class EditLabel extends Vue {
   tag?: Tag = undefined;
-
+  h = document.body.clientHeight;
   created() {
     const id = this.$route.params.id;
     this.$store.commit('fetchTags');
