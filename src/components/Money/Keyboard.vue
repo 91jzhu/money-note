@@ -23,7 +23,7 @@
         <button @click="inputContent">7</button>
         <button @click="inputContent">8</button>
         <button @click="inputContent">9</button>
-        <button>今日</button>
+        <button @click="xxx">今日</button>
         <button @click="inputContent" style="width:49%">0</button>
         <button @click="inputContent">.</button>
         <button @click="ok" class="ok">OK</button>
@@ -42,6 +42,14 @@ export default class Keyboard extends Vue {
   @Prop() placeholder?: string;
   @Prop(Number) readonly value!: number;
   output = this.value.toString();
+
+  xxx(){
+    let now=new Date()
+    let year=now.getFullYear()
+    let month=now.getMonth()+1
+    let day=now.getDate()
+    window.alert(`今天是${year}年${month}月${day}日`);
+  }
 
   onValueChange(value2: string) {
     this.$emit('update:value2', value2);
