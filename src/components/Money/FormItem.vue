@@ -40,14 +40,13 @@ export default class FormItem extends Vue{
     display: block;
     outline: none;
     max-width: 210px;
-    height:20px;
+    height:30px;
     flex-grow: 1;
     background: transparent;
     border:lightyellow;
     padding:4px 8px;
     &:focus{
-      outline:1px solid lightcoral;
-      box-shadow: 0 0 3px cyan inset;
+      box-shadow: 0 0 10px grey;
     }
   }
 }

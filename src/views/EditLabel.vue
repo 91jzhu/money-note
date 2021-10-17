@@ -84,6 +84,9 @@ export default class EditLabel extends Vue {
 
 .labelName {
   font-size: 20px;
+  ::v-deep input{
+    border-radius: 10px;
+  }
 }
 
 .button-wrapper {

@@ -100,12 +100,12 @@ export default class Keyboard extends Vue {
     padding:4px 8px;
     outline: none;
     border:none;
-    height: 28px;
+    height: 30px;
     flex-grow: 1;
     background-color: transparent;
     &:focus{
-      outline:1px solid lightcoral;
-      box-shadow: 0 0 3px cyan inset;
+      border-radius: 10px;
+      box-shadow: 0 0 10px grey;
     }
   }
 }
