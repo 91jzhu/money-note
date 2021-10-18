@@ -3,7 +3,7 @@
     <div class="test">
       <Tabs :content=str
             class-pre-fix="type"
-              :data-source="typeList"
+            :data-source="typeList"
             :value.sync="type"/>
       <Echart class="xxx" :options="x"></Echart>
       <ol class="ol-class" v-if="groupedList.length>0">
