@@ -3,6 +3,7 @@ type RootState={
     tagList:Tag[],
     currentTag?: Tag
     createTagError:Error|null,
+    createRecordError:Error|null
 }
 type RecordItem = {
     tags: Tag[]
@@ -15,6 +16,7 @@ type Tag = {
     id: string;
     name: string;
 }
+
 
 interface Window {
     store:{

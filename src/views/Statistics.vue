@@ -3,8 +3,9 @@
     <div class="test">
       <Tabs :content=str
             class-pre-fix="type"
-            :data-source="typeList"
+              :data-source="typeList"
             :value.sync="type"/>
+      <Echart class="xxx" :options="x"></Echart>
       <ol class="ol-class" v-if="groupedList.length>0">
         <li v-for="(group,index) in groupedList" :key="index">
           <h3 class="title">{{ beautify(group.title) }}<span>￥ {{ group.total }}</span></h3>
@@ -34,28 +35,45 @@ import Tabs from '@/components/Tabs.vue';
 import typeList from '@/constants/typeList';
 import dayjs from 'dayjs';
 import clone from '@/lib/clone';
-
-const oneDay = 864000;
+import Echart from '@/components/Echart.vue'
 
 @Component({
-  components: {Tabs}
+  components: {Tabs,Echart}
 })
 export default class Statistics extends Vue {
   str: string = '看账本啦';
 
+  get x(){
+    return{
+      xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [150, 230, 224, 218, 135, 147, 260],
+          type: 'line'
+        }
+      ]
+    }
+  }
+
   beautify(string: string) {
-    const now = new Date();
-    if (dayjs(string).isSame(now, 'day')) {
+    const day = dayjs(string);
+    const now = dayjs();
+    if (day.isSame(now, 'day')) {
       return '今天';
-    } else if (dayjs(string).isSame(now.valueOf() - oneDay, 'day')) {
+    } else if (day.isSame(now.subtract(1, 'day'), 'day')) {
       return '昨天';
-    } else if (dayjs(string).isSame(now.valueOf() - oneDay * 2, 'day')) {
+    } else if (day.isSame(now.subtract(2, 'day'), 'day')) {
       return '前天';
+    } else if (day.isSame(now, 'year')) {
+      return day.format('M月D日');
     } else {
-      if (dayjs(string).isSame(now, 'year')) {
-        return dayjs(string).format('M月D日');
-      }
-      return dayjs(string).format('YYYY年M月D日');
+      return day.format('YYYY年M月D日');
     }
   }
 
@@ -106,8 +124,15 @@ export default class Statistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.xxx{
+  border:1px solid red;
+  width:100%;
+  height:300px;
+}
 .text {
   margin-top: 16px;
+  white-space: nowrap;
+  overflow-y: auto;
 }
 
 .no-result {
@@ -128,7 +153,7 @@ export default class Statistics extends Vue {
 }
 
 .ol-class {
-  max-height: 80vh;
+  max-height: 40vh;
   white-space: nowrap;
   overflow-y: auto;
 

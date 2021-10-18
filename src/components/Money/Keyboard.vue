@@ -136,7 +136,7 @@ export default class Keyboard extends Vue {
     line-height: 8px;
     font-size: 36px;
     font-family: Consolas, monospace;
-    padding: 9px 16px;
+    padding: 9px 4px;
     text-align: right;
   }
   .buttons {
@@ -157,9 +157,10 @@ export default class Keyboard extends Vue {
       border: 2px solid black;
       border-radius: 30px;
       background: #fdfffe;
-      width: 22%;
+      width: 24%;
       height: 48px;
       &.ok{
+        margin-left: 4px;
         background: #f1c313;
       }
     }

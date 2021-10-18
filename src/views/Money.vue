@@ -33,7 +33,7 @@ import typeList from '@/constants/typeList';
   }
 })
 export default class Money extends Vue {
-  str: string = '记一笔帐';
+  str = '记一笔帐';
   h = document.body.clientHeight;
   record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
   typeList = typeList;
