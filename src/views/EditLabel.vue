@@ -19,7 +19,6 @@
                   placeholder="请输入标签名"/>
       </div>
 
-
       <div class="button-wrapper">
         <Button class="delete" @click="remove">删除标签</Button>
       </div>
@@ -74,6 +73,7 @@ export default class EditLabel extends Vue {
 
 <style lang="scss" scoped>
 .delete {
+  cursor: pointer;
   background: #FFD2D2;
   border: none;
   border-radius: 20px;

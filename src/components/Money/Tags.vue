@@ -61,6 +61,7 @@ export default class Tags extends mixins(TagHelper) {
     margin-right: -12px;
 
     > li {
+      cursor: pointer;
       box-shadow: 5px 2.5px 2.5px pink;
       background-color: lightblue;
       height: 30px;

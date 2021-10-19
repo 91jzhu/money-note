@@ -55,6 +55,7 @@ export default class Tabs extends Vue {
   flex-wrap: nowrap;
 
   &-item {
+    cursor: pointer;
     white-space: nowrap;
     width: 80px;
     line-height: 48px;

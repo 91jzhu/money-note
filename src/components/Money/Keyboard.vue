@@ -154,6 +154,7 @@ export default class Keyboard extends Vue {
     font-size: 24px;
 
     > button {
+      cursor: pointer;
       border: 2px solid black;
       border-radius: 30px;
       background: #fdfffe;
