@@ -5,7 +5,7 @@
             class-pre-fix="type"
             :data-source="typeList"
             :value.sync="type"/>
-      <Echart class="xxx" :options="x"></Echart>
+      <Chart class="xxx" :options="x"></Chart>
       <ol class="ol-class" v-if="groupedList.length>0">
         <li v-for="(group,index) in groupedList" :key="index">
           <h3 class="title">{{ beautify(group.title) }}<span>￥ {{ group.total }}</span></h3>
@@ -35,10 +35,10 @@ import Tabs from '@/components/Tabs.vue';
 import typeList from '@/constants/typeList';
 import dayjs from 'dayjs';
 import clone from '@/lib/clone';
-import Echart from '@/components/Echart.vue'
+import Chart from '@/components/Chart.vue'
 
 @Component({
-  components: {Tabs,Echart}
+  components: {Tabs,Chart}
 })
 export default class Statistics extends Vue {
   str: string = '看账本啦';
