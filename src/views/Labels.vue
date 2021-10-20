@@ -63,7 +63,7 @@ export default class Labels extends mixins(TagHelper) {
 }
 
 .newTag {
-  cursor: pointer;
+  cursor: grab;
   background: #FFD2D2;
   border: none;
   border-radius: 20px;
