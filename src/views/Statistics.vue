@@ -5,7 +5,9 @@
             class-pre-fix="type"
             :data-source="typeList"
             :value.sync="type"/>
-      <Chart class="xxx" :options="x"></Chart>
+      <div class="chart-wrapper" ref="chartWrapper">
+        <Chart class="chart" :options="x"></Chart>
+      </div>
       <ol class="ol-class" v-if="groupedList.length>0">
         <li v-for="(group,index) in groupedList" :key="index">
           <h3 class="title">{{ beautify(group.title) }}<span>￥ {{ group.total }}</span></h3>
@@ -43,18 +45,28 @@ import Chart from '@/components/Chart.vue'
 export default class Statistics extends Vue {
   str: string = '看账本啦';
 
+  mounted(){
+    (this.$refs.chartWrapper as HTMLDivElement).scrollLeft=9999
+  }
   get x(){
     return{
+      grid:{
+        left:0,
+        right:0,
+        // top:0,
+        // bottom:0
+      },
       xAxis: {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
       },
       yAxis: {
-        type: 'value'
+        type: 'value',
+        show:false
       },
       series: [
         {
-          data: [150, 230, 224, 218, 135, 147, 260],
+          data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
           type: 'line'
         }
       ]
@@ -124,10 +136,12 @@ export default class Statistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.xxx{
-  border:1px solid red;
-  width:100%;
-  height:300px;
+.chart-wrapper{
+  overflow: auto;
+}
+.chart{
+  width:430%;
+  height:400px;
 }
 .text {
   margin-top: 16px;

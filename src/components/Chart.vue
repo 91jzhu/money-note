@@ -23,7 +23,5 @@ export default class Chart extends Vue {
 </script>
 
 <style lang="scss" scoped>
-#main {
-  height: 300px;
-}
+
 </style>
