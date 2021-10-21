@@ -94,7 +94,10 @@ export default class Statistics extends Vue {
       xAxis: [
         {
           axisLabel:{
-            fontWeight:'900'
+            fontWeight:'900',
+            formatter: function (value) {
+              return value.slice(5).replace('-','月')+'日';
+            }
           },
           axisLine:{
             lineStyle:{color:'#ff7500'}
