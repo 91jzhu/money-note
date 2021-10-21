@@ -6,7 +6,7 @@
             :data-source="typeList"
             :value.sync="type"/>
       <div class="chart-wrapper" ref="chartWrapper">
-        <Chart class="chart" :options="x"></Chart>
+        <Chart class="chart" :options="chartOptions"></Chart>
       </div>
       <ol class="ol-class" v-if="groupedList.length>0">
         <li v-for="(group,index) in groupedList" :key="index">
@@ -36,35 +36,60 @@ import {Component} from 'vue-property-decorator';
 import Tabs from '@/components/Tabs.vue';
 import typeList from '@/constants/typeList';
 import dayjs from 'dayjs';
+import day from 'dayjs'
 import clone from '@/lib/clone';
 import Chart from '@/components/Chart.vue';
 import * as echarts from 'echarts';
+import _ from 'lodash'
 
 @Component({
   components: {Tabs,Chart}
 })
 export default class Statistics extends Vue {
   str = '看账本啦';
-  keys=undefined
-  values=undefined
+
   mounted(){
     const div=this.$refs.chartWrapper as HTMLDivElement
     div.scrollLeft=div.scrollWidth
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  get y(){
-    return this.recordList.map((item) => ({time: item.createdAt.slice(0, 10), cash: item.amount}))
+  get keyValueList() {
+    const today = new Date();
+    const array = [];
+    for (let i = 0; i <= 29; i++) {
+      // this.recordList = [{date:7.3, value:100}, {date:7.2, value:200}]
+      const dateString = day(today)
+          .subtract(i, 'day').format('YYYY-MM-DD');
+      console.log(dateString);
+      const found = _.find(this.groupedList, {
+        title: dateString
+      });
+      array.push({
+        key: dateString, value: found ? found.total : 0
+      });
+    }
+    array.sort((a, b) => {
+      if (a.key > b.key) {
+        return 1;
+      } else if (a.key === b.key) {
+        return 0;
+      } else {
+        return -1;
+      }
+    });
+    return array;
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  get x(){
-    const keys=this.y.map(item=>item.time)
-    const values=this.y.map(item=>item.cash)
+  get chartOptions(){
+    const keys=this.keyValueList.map(item=>item.key)
+    const values=this.keyValueList.map(item=>item.value)
     return{
       grid:{
-        left:'2%',
-        right:'2%',
+        // width:'',
+        left:'1%',
+        right:'1%',
         bottom:'5%'
       },
       color: ['#80FFA5'],
@@ -73,7 +98,7 @@ export default class Statistics extends Vue {
       // },
       tooltip: {
         formatter:'{c}',
-        position:'bottom',
+        position:'top',
         extraCssText: 'box-shadow: 0 0 10px grey;'
         // trigger: 'axis',
         // axisPointer: {
@@ -94,15 +119,16 @@ export default class Statistics extends Vue {
       xAxis: [
         {
           axisLabel:{
-            fontWeight:'900',
-            formatter: function (value) {
-              return value.slice(5).replace('-','月')+'日';
+            // interval:2,
+            formatter: function (value:string) {
+              return value.substr(5);
             }
           },
           axisLine:{
+            symbol:['none','arrow'],
             lineStyle:{color:'#ff7500'}
           },
-          axisTick:false,
+          axisTick:{show:true, alignWithLabel:true},
           type: 'category',
           boundaryGap: false,
           data: keys
@@ -227,8 +253,8 @@ export default class Statistics extends Vue {
   }
 }
 .chart{
-  width:430%;
-  min-height: 400px;
+  width:600%;
+  height: 400px;
 }
 .text {
   margin-top: 16px;
