@@ -22,7 +22,7 @@
         </li>
       </ol>
 
-      <div v-else class="no-result">
+      <div v-else class="no-result" style="display: none">
         <Icon name="replace" style="font-size: 192px"/>
         <span class="text">还没有记录，快来记一🖊吧</span>
       </div>
@@ -38,6 +38,7 @@ import typeList from '@/constants/typeList';
 import dayjs from 'dayjs';
 import clone from '@/lib/clone';
 import Chart from '@/components/Chart.vue'
+import * as echarts from 'echarts';
 
 @Component({
   components: {Tabs,Chart}
@@ -51,24 +52,93 @@ export default class Statistics extends Vue {
   get x(){
     return{
       grid:{
-        left:0,
-        right:0,
-        // top:0,
-        // bottom:0
+        left:'2%',
+        right:'2%',
+        bottom:'5%'
       },
-      xAxis: {
-        type: 'category',
-        data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
+      color: ['#80FFA5'],
+      // title: {
+      //   text: 'Gradient Stacked Area Chart'
+      // },
+      tooltip: {
+        formatter:'{c}',
+        position:'bottom',
+        extraCssText: 'box-shadow: 0 0 10px grey;'
+        // trigger: 'axis',
+        // axisPointer: {
+        //   type: 'cross',
+        //   label: {
+        //     backgroundColor: '#6a7985'
+        //   }
+        // }
       },
-      yAxis: {
-        type: 'value',
-        show:false
+      legend: {
+        data: ['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']
       },
-      series: [
-        {
-          data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
-          type: 'line'
+      toolbox: {
+        feature: {
+          saveAsImage: {}
         }
+      },
+      xAxis: [
+        {
+          axisLabel:{
+            fontWeight:'900'
+          },
+          axisLine:{
+            lineStyle:{color:'#ff7500'}
+          },
+          axisTick:false,
+          type: 'category',
+          boundaryGap: false,
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
+            'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
+            'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',]
+        }
+      ],
+      yAxis: [{
+          // min:10,
+        },
+        {
+          show:false,
+          type: 'value'
+        }
+      ],
+      series: [{
+          itemStyle:{
+            color:'rgb(255, 70, 131)',
+            opacity: 1,
+          },
+          name: 'Line 1',
+          type: 'line',
+          stack: 'Total',
+          smooth: true,
+          lineStyle: {
+            width: 0
+          },
+          symbol: 'pin',
+          symbolSize: 48,
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: 'rgba(128, 255, 165)'
+              },
+              {
+                offset: 1,
+                color: 'rgba(1, 191, 236)'
+              }
+            ])
+          },
+          emphasis: {
+            focus: 'self',
+            scale:true
+          },
+          data: [14, 23, 10, 26, 9, 34, 25,
+            14, 23, 10, 26, 9, 34, 25,
+            14, 23, 10, 26, 9, 34, 25,]
+        },
       ]
     }
   }
@@ -138,10 +208,13 @@ export default class Statistics extends Vue {
 <style lang="scss" scoped>
 .chart-wrapper{
   overflow: auto;
+  &::-webkit-scrollbar{
+    display: none;
+  }
 }
 .chart{
   width:430%;
-  height:400px;
+  min-height: 400px;
 }
 .text {
   margin-top: 16px;
