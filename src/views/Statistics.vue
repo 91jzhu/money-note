@@ -61,7 +61,6 @@ export default class Statistics extends Vue {
       // this.recordList = [{date:7.3, value:100}, {date:7.2, value:200}]
       const dateString = day(today)
           .subtract(i, 'day').format('YYYY-MM-DD');
-      console.log(dateString);
       const found = _.find(this.groupedList, {
         title: dateString
       });
@@ -108,9 +107,9 @@ export default class Statistics extends Vue {
         //   }
         // }
       },
-      legend: {
-        data: ['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']
-      },
+      // legend: {
+      //   data: ['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']
+      // },
       toolbox: {
         feature: {
           saveAsImage: {}
