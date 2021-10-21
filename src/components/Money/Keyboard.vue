@@ -35,7 +35,6 @@
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
 
-
 @Component
 export default class Keyboard extends Vue {
   @Prop({default: ''}) readonly value2!: string;
@@ -43,6 +42,7 @@ export default class Keyboard extends Vue {
   @Prop(Number) readonly value!: number;
   output = this.value.toString();
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   xxx(){
     let now=new Date()
     let year=now.getFullYear()
@@ -50,11 +50,11 @@ export default class Keyboard extends Vue {
     let day=now.getDate()
     window.alert(`今天是${year}年${month}月${day}日`);
   }
-
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   onValueChange(value2: string) {
     this.$emit('update:value2', value2);
   }
-
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   remove() {
 
     if (this.output.length === 1) {
@@ -63,18 +63,18 @@ export default class Keyboard extends Vue {
       this.output = this.output.slice(0, -1);
     }
   }
-
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   clear() {
     this.output = '0';
   }
-
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   ok() {
     const number = parseFloat(this.output);
     this.$emit('update:value', number);
     this.$emit('submit', number);
     this.output = '0';
   }
-
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   inputContent(event: MouseEvent) {
     const button = (event.target as HTMLButtonElement);
     const text = button.textContent as string;

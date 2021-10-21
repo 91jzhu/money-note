@@ -15,9 +15,13 @@ export default class Chart extends Vue {
 
   mounted() {
     if (!this.$options) {return;}
-    console.log(this.$options);
-    let chart = echarts.init(document.getElementById('main'));
-    chart.setOption(this.options);
+    this.$nextTick(()=>{
+      const div=document.getElementById('main') as HTMLDivElement
+      if(div){
+        let chart = echarts.init(div);
+        chart.setOption(this.options);
+      }
+    })
   }
 }
 </script>

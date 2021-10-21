@@ -37,19 +37,30 @@ import Tabs from '@/components/Tabs.vue';
 import typeList from '@/constants/typeList';
 import dayjs from 'dayjs';
 import clone from '@/lib/clone';
-import Chart from '@/components/Chart.vue'
+import Chart from '@/components/Chart.vue';
 import * as echarts from 'echarts';
 
 @Component({
   components: {Tabs,Chart}
 })
 export default class Statistics extends Vue {
-  str: string = '看账本啦';
-
+  str = '看账本啦';
+  keys=undefined
+  values=undefined
   mounted(){
-    (this.$refs.chartWrapper as HTMLDivElement).scrollLeft=9999
+    const div=this.$refs.chartWrapper as HTMLDivElement
+    div.scrollLeft=div.scrollWidth
   }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  get y(){
+    return this.recordList.map((item) => ({time: item.createdAt.slice(0, 10), cash: item.amount}))
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   get x(){
+    const keys=this.y.map(item=>item.time)
+    const values=this.y.map(item=>item.cash)
     return{
       grid:{
         left:'2%',
@@ -91,14 +102,10 @@ export default class Statistics extends Vue {
           axisTick:false,
           type: 'category',
           boundaryGap: false,
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
-            'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
-            'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',]
+          data: keys
         }
       ],
-      yAxis: [{
-          // min:10,
-        },
+      yAxis: [
         {
           show:false,
           type: 'value'
@@ -135,14 +142,13 @@ export default class Statistics extends Vue {
             focus: 'self',
             scale:true
           },
-          data: [14, 23, 10, 26, 9, 34, 25,
-            14, 23, 10, 26, 9, 34, 25,
-            14, 23, 10, 26, 9, 34, 25,]
+          data: values
         },
       ]
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   beautify(string: string) {
     const day = dayjs(string);
     const now = dayjs();
@@ -159,19 +165,24 @@ export default class Statistics extends Vue {
     }
   }
 
+  // eslint-disable-next-line no-undef,@typescript-eslint/explicit-module-boundary-types
   tagString(tags: Tag[]) {
     return tags.length === 0 ? '无' : tags.map(i => i.name).join('、');
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   get recordList() {
+    // eslint-disable-next-line no-undef
     return (this.$store.state as RootState).recordList;
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   get groupedList() {
     const {recordList} = this;
     type Result = {
       title: string,
       total?: number,
+      // eslint-disable-next-line no-undef
       items: RecordItem[]
     }[]
     const newList = clone(recordList).filter(r => r.type === this.type).sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
