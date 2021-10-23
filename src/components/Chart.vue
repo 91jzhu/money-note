@@ -1,33 +1,26 @@
 <template>
-  <div id="main">
+  <div ref="wrapper">
   </div>
 </template>
 
 <script lang="ts">
-// import {Vue} from 'vue-property-decorator';
-import * as echarts from 'echarts';
-import EChartOption from 'echarts';
-import {Component, Prop, Vue,Watch} from 'vue-property-decorator';
-
-@Component({})
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import echarts, {EChartOption, ECharts} from 'echarts';
+@Component
 export default class Chart extends Vue {
   @Prop() options?: EChartOption;
-  // eslint-disable-next-line no-undef
-  chart?:Echarts
+  chart?: ECharts;
   mounted() {
-    if (!this.$options) {return;}
-    this.$nextTick(()=>{
-      const div=document.getElementById('main') as HTMLDivElement
-      if(div){
-        this.chart = echarts.init(div);
-        this.chart.setOption(this.options);
-      }
-    })
+    if (this.options === undefined) {
+      return console.error('options 为空');
+    }
+    this.chart = echarts.init(this.$refs.wrapper as HTMLDivElement);
+    this.chart.setOption(this.options);
   }
-  @Watch('options',{immediate:true})
+  @Watch('options')
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  onOptionsChange(newVal){
-    this.chart?.setOption(newVal)
+  onOptionsChange(newValue: EChartOption) {
+    this.chart?.setOption(newValue);
   }
 }
 </script>

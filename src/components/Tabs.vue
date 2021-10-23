@@ -25,7 +25,6 @@ export default class Tabs extends Vue {
   @Prop(String) readonly value!: string;
   @Prop(String) classPreFix?: string;
 
-
   select(item: { text: string, value: string }) {
     this.$emit('update:value', item.value);
   }

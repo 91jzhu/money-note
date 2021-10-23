@@ -1,6 +1,6 @@
 <template>
   <div class="layout-wrapper">
-    <div class="content" v-bind:class="contentClass">
+    <div ref="content" class="content" :class="contentClass">
       <slot/>
     </div>
     <Nav/>
@@ -10,7 +10,7 @@
 <script lang="ts">
   export default {
     props:["contentClass"],
-    name:"LayOut"
+    name:"LayOut",
   }
 </script>
 
@@ -25,6 +25,7 @@
   flex-direction: column;
   min-height: 100vh;
 }
+
 .content{
   overflow: auto;
   flex-grow: 1;

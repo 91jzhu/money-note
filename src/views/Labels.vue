@@ -1,27 +1,27 @@
 <template>
   <LayOut>
-    <div class="tags">
-      <div class="test">
+      <div class="tags">
+        <div class="test">
 
-      </div>
-      <div class="top">
-        <Icon name="tag"/>
-        标签页
-      </div>
-      <router-link class="tag"
-                   ref="www"
-                   :to="`/labels/edit/${tag.id}`"
-                   v-for="tag in tags" :key="tag.id">
+        </div>
+        <div class="top">
+          <Icon name="tag"/>
+          标签页
+        </div>
+        <router-link class="tag"
+                     ref="www"
+                     :to="`/labels/edit/${tag.id}`"
+                     v-for="tag in tags" :key="tag.id">
         <span>
           <Icon name="tags"/>
           {{ tag.name }}
         </span>
-        <Icon name="right"/>
-      </router-link>
-    </div>
-    <div class="newTag-wrapper">
-      <Button class="newTag" @click="createTag">新建标签</Button>
-    </div>
+          <Icon name="right"/>
+        </router-link>
+      </div>
+      <div class="newTag-wrapper">
+        <Button class="newTag" @click="createTag">新建标签</Button>
+      </div>
   </LayOut>
 </template>
 
@@ -46,9 +46,10 @@ export default class Labels extends mixins(TagHelper) {
 </script>
 
 <style lang="scss" scoped>
-.test{
+.test {
   height: 60px;
 }
+
 .top {
   width: 100%;
   background: white;
@@ -57,7 +58,7 @@ export default class Labels extends mixins(TagHelper) {
   align-items: center;
   height: 60px;
   font-size: 24px;
-  top:0;
+  top: 0;
   position: absolute;
   box-shadow: 0 3px 3px -3px #5E5E5E;
 }

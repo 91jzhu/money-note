@@ -1,14 +1,13 @@
 <template>
   <LayOut>
-    <div class="test">
-      <Tabs :content=str
-            class-pre-fix="type"
-            :data-source="typeList"
-            :value.sync="type"/>
-      <div class="chart-wrapper" ref="chartWrapper">
-        <Chart class="chart" :options="chartOptions"></Chart>
-      </div>
-      <ol class="ol-class" v-if="groupedList.length>0">
+    <Tabs :content=str
+          class-pre-fix="type"
+          :data-source="typeList"
+          :value.sync="type"/>
+    <div class="chart-wrapper" ref="chartWrapper">
+      <Chart class="chart" :options="chartOptions"></Chart>
+    </div>
+      <ol class="ol-class" v-if="groupedList.length>0" ref="list">
         <li v-for="(group,index) in groupedList" :key="index">
           <h3 class="title">{{ beautify(group.title) }}<span>￥ {{ group.total }}</span></h3>
           <ol>
@@ -21,12 +20,10 @@
           </ol>
         </li>
       </ol>
-
-      <div v-else class="no-result" style="display: none">
-        <Icon name="replace" style="font-size: 192px"/>
-        <span class="text">还没有记录，快来记一🖊吧</span>
+      <div v-else class="no-result">
+        <Icon name="null"/>
+        <span>快来记一笔帐吧</span>
       </div>
-    </div>
   </LayOut>
 </template>
 
@@ -36,21 +33,24 @@ import {Component} from 'vue-property-decorator';
 import Tabs from '@/components/Tabs.vue';
 import typeList from '@/constants/typeList';
 import dayjs from 'dayjs';
-import day from 'dayjs'
+import day from 'dayjs';
 import clone from '@/lib/clone';
 import Chart from '@/components/Chart.vue';
 import * as echarts from 'echarts';
-import _ from 'lodash'
+import _ from 'lodash';
+
 
 @Component({
-  components: {Tabs,Chart}
+  components: {Tabs, Chart}
 })
 export default class Statistics extends Vue {
   str = '看账本啦';
+  h: 0 | undefined;
 
-  mounted(){
-    const div=this.$refs.chartWrapper as HTMLDivElement
-    div.scrollLeft=div.scrollWidth
+  mounted() {
+    const div = (this.$refs.chartWrapper as HTMLDivElement);
+    div.scrollLeft = div.scrollWidth;
+    div.scrollTop=div.scrollHeight;
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -81,53 +81,33 @@ export default class Statistics extends Vue {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  get chartOptions(){
-    const keys=this.keyValueList.map(item=>item.key)
-    const values=this.keyValueList.map(item=>item.value)
-    return{
-      grid:{
-        // width:'',
-        left:'1%',
-        right:'1%',
-        bottom:'5%'
+  get chartOptions() {
+    const keys = this.keyValueList.map(item => item.key);
+    const values = this.keyValueList.map(item => item.value);
+    return {
+      grid: {
+        top: '2%',
+        left: '1.6%',
+        right: '1.6%',
       },
       color: ['#80FFA5'],
-      // title: {
-      //   text: 'Gradient Stacked Area Chart'
-      // },
       tooltip: {
-        formatter:'{c}',
-        position:'top',
-        extraCssText: 'box-shadow: 0 0 10px grey;'
-        // trigger: 'axis',
-        // axisPointer: {
-        //   type: 'cross',
-        //   label: {
-        //     backgroundColor: '#6a7985'
-        //   }
-        // }
-      },
-      // legend: {
-      //   data: ['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']
-      // },
-      toolbox: {
-        feature: {
-          saveAsImage: {}
-        }
-      },
+        formatter: '{c}',
+        position: 'top',
+        extraCssText: 'box-shadow: 0 0 10px grey;'},
       xAxis: [
         {
-          axisLabel:{
+          axisLabel: {
             // interval:2,
-            formatter: function (value:string) {
+            formatter: function (value: string) {
               return value.substr(5);
             }
           },
-          axisLine:{
-            symbol:['none','arrow'],
-            lineStyle:{color:'#ff7500'}
+          axisLine: {
+            symbol: ['none', 'arrow'],
+            lineStyle: {color: '#ff7500'}
           },
-          axisTick:{show:true, alignWithLabel:true},
+          axisTick: {show: true, alignWithLabel: true},
           type: 'category',
           boundaryGap: false,
           data: keys
@@ -135,45 +115,48 @@ export default class Statistics extends Vue {
       ],
       yAxis: [
         {
-          show:false,
+          // axisTick:{length:10},
+          splitNumber: 5,
+          minInterval: 200,
+          show: false,
           type: 'value'
         }
       ],
       series: [{
-          itemStyle:{
-            color:'rgb(255, 70, 131)',
-            opacity: 1,
-          },
-          name: 'Line 1',
-          type: 'line',
-          stack: 'Total',
-          smooth: true,
-          lineStyle: {
-            width: 0
-          },
-          symbol: 'pin',
-          symbolSize: 48,
-          areaStyle: {
-            opacity: 0.8,
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              {
-                offset: 0,
-                color: 'rgba(128, 255, 165)'
-              },
-              {
-                offset: 1,
-                color: 'rgba(1, 191, 236)'
-              }
-            ])
-          },
-          emphasis: {
-            focus: 'self',
-            scale:true
-          },
-          data: values
+        itemStyle: {
+          color: 'rgb(255, 70, 131)',
+          opacity: 1,
         },
+        name: 'Line 1',
+        type: 'line',
+        stack: 'Total',
+        smooth: true,
+        lineStyle: {
+          width: 0
+        },
+        symbol: 'pin',
+        symbolSize: 48,
+        areaStyle: {
+          opacity: 0.8,
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: 'rgba(128, 255, 165)'
+            },
+            {
+              offset: 1,
+              color: 'rgba(1, 191, 236)'
+            }
+          ])
+        },
+        emphasis: {
+          focus: 'self',
+          scale: true
+        },
+        data: values
+      },
       ]
-    }
+    };
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -245,47 +228,64 @@ export default class Statistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.chart-wrapper{
+.chart-wrapper {
   overflow: auto;
-  &::-webkit-scrollbar{
-    display: none;
-  }
-}
-.chart{
-  width:600%;
-  height: 400px;
-}
-.text {
-  margin-top: 16px;
-  white-space: nowrap;
-  overflow-y: auto;
-}
-
-.no-result {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
-}
-
-.test2 {
-  min-height: 10vh;
-}
-
-.ol-class {
-  max-height: 40vh;
-  white-space: nowrap;
-  overflow-y: auto;
+  max-height: 300px;
 
   &::-webkit-scrollbar {
     width: 0 !important
   }
+}
+
+.chart {
+  width: 600%;
+  height: 500px;
+}
+
+.ol-class {
+  box-shadow: 0 -0.1px 2px grey;
+  position: absolute;
+  white-space: nowrap;
+  overflow-y: auto;
+  height: 34vh;
+  bottom: 60px;
+  width: 99.9%;
+
+  &::-webkit-scrollbar {
+    width: 0 !important
+  }
+}
+//@media (min-height:570px) {
+//  .ol-class{
+//    height:32vh;
+//  }
+//}
+@media (min-height:570px)and(max-width:667px) {
+  .ol-class{
+    height:38vh;
+  }
+}
+@media (min-height:668px)and(max-width:735px) {
+  .ol-class{
+    height:47vh;
+  }
+}
+@media (min-height:736px)and(max-width:812px) {
+  .ol-class{
+    height:48vh;
+  }
+}
+@media (min-height:812px) and(max-width:1026px){
+  .ol-class{
+    height:52vh;
+  }
+}
+.no-result {
+  border: 1px solid green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
 h3 {
@@ -305,17 +305,13 @@ h3 {
   }
 }
 
-.div-button {
-  border: 1px solid red;
-}
-
 %item {
   padding: 10px 18px;
-  min-height: 40px;
   line-height: 24px;
 }
 
 .title {
+  background: lightgrey;
   @extend %item;
 }
 
