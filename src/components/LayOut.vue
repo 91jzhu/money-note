@@ -19,7 +19,6 @@
   display: flex;
   flex-direction: column-reverse;
 }
-
 .layout-wrapper{
   display: flex;
   flex-direction: column;

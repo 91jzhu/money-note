@@ -247,7 +247,7 @@ export default class Statistics extends Vue {
   position: absolute;
   white-space: nowrap;
   overflow-y: auto;
-  height: 34vh;
+  height:30vh;
   bottom: 60px;
   width: 99.9%;
 
@@ -255,37 +255,57 @@ export default class Statistics extends Vue {
     width: 0 !important
   }
 }
-//@media (min-height:570px) {
-//  .ol-class{
-//    height:32vh;
-//  }
-//}
-@media (min-height:570px)and(max-width:667px) {
+@media (max-height: 1367px){
   .ol-class{
-    height:38vh;
+    height:72vh;
   }
 }
-@media (min-height:668px)and(max-width:735px) {
+@media (min-height:1023px)and(max-height:1366px) {
   .ol-class{
-    height:47vh;
+    height:62vh;
   }
 }
-@media (min-height:736px)and(max-width:812px) {
-  .ol-class{
-    height:48vh;
-  }
-}
-@media (min-height:812px) and(max-width:1026px){
+@media (min-height:811px)and(max-height:1023px) {
   .ol-class{
     height:52vh;
   }
 }
+@media (min-height:735px)and(max-height:811px) {
+  .ol-class{
+    height:48vh;
+  }
+}
+@media (min-height:666px)and(max-height:735px) {
+  .ol-class{
+    height:43vh;
+  }
+}
+@media (min-height:567px)and(max-height:666px) {
+  .ol-class{
+    height:34vh;
+  }
+}
+
 .no-result {
-  border: 1px solid green;
+  box-shadow:2px 2px 10px grey;
+  position: absolute;
+  border-radius: 16px;
+  width:80%;
+
+  left:50%;
+
+
+  bottom:26vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
+  animation: wave 1.6s linear infinite;
+}
+@keyframes wave {
+  0%{transform: translateX(-50%)}
+  33%{transform: translateX(-50%) scale(1.2)}
+  100%{transform: translateX(-50%)}
 }
 
 h3 {

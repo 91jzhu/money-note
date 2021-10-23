@@ -60,6 +60,7 @@ export default class Money extends Vue {
   flex-direction: column-reverse;
 }
 
+
 </style>
 
 
