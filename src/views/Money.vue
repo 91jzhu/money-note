@@ -35,6 +35,7 @@ import typeList from '@/constants/typeList';
 export default class Money extends Vue {
   str = '记一笔帐';
   h = document.body.clientHeight;
+  // eslint-disable-next-line no-undef
   record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
   typeList = typeList;
 

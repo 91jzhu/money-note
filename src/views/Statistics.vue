@@ -98,7 +98,6 @@ export default class Statistics extends Vue {
       xAxis: [
         {
           axisLabel: {
-            // interval:2,
             formatter: function (value: string) {
               return value.substr(5);
             }
